@@ -20,41 +20,29 @@
 
 例如笔者在 Win10 x64 管理员权限下监控 API  RegOpenKeyExW，API Monitor 并没有正确的工作。
 
-相反，笔者的 Win32Exts_for_API_Monitor 却工作的很好。 
+相反，Win32Exts_for_API_Monitor 却工作的很好。 
 
 ![api_demo](https://github.com/tankaishuai/Win32Exts_for_API_Monitor/blob/master/img/api_monitor_1.jpg)
 
 
 ## （2）	API Monitor 的解码参数信息过于简单，通常仅支持解码一些整型参数与字符串，以及常量表示。
 
-笔者的 Win32Exts_for_API_Monitor 却可以支持解码各种复杂的数据类型以及格式表示，
+Win32Exts_for_API_Monitor 却可以支持解码各种复杂的数据类型以及格式表示，
 
 同时对于预定义不支持的类型也提供了插件扩展方式支持之。
 
 ![api_demo](https://github.com/tankaishuai/Win32Exts_for_API_Monitor/blob/master/img/api_monitor_2.jpg)
 
 
-## （3）	API Monitor 仅仅只能监控API函数调用完成之后的结果，对于调用之前的信息并不能正确地得到。
+## （3）	API Monitor 仅仅只能监控API函数调用完成之前的结果，对于调用之后的信息并不能正确地得到。
 
 例如以下形式的导出函数：
 
-BOOL PathAppendW(__inout WCHAR *pszPath)；
+BOOL PathAppendW(__inout WCHAR *pszPath, LPCWSTR szSubPath)；
 
-由于参数是一个输出输出型参数，API Monitor 并不能正确拿到函数调用之前传入的是什么数据。
+由于参数 pszPath 是一个输出输出型参数，API Monitor 并不能正确拿到函数调用之后 pszPath 是什么数据内容。
 
-又例如：
-
-VOID SomeApi( LPCWSTR szParam ){
-
-.    _wprintf(L”%s”, szParam);
-
-.    szParam = (LPCWSTR)( -1 );
-
-}
-
-则甚至可能导致 API Monitor 解码时直接崩溃Crash。
-
-笔者的Win32Exts_for_API_Monitor 可以正确监控API调用之前，以及调用之后的参数、返回值 信息。
+Win32Exts_for_API_Monitor 可以正确监控API调用之前，以及调用之后的参数、返回值 信息。
 
 
 当然，API Monitor 也有一些优点是 Win32Exts_for_API_Monitor所不具备的，具体体现在：
