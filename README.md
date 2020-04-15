@@ -135,7 +135,7 @@ $ ： 文件handle
 
 < : 局部atom
 
-> : 全局atom
+`> : 全局atom
 
 ? : IUnknown *
 
