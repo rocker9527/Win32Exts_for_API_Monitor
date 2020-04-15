@@ -1,6 +1,6 @@
 # Win32Exts_for_API_Monitor
 
-Win32Exts for API_Monitor 是Win32Exts项目组提供的一个强大的API 监视工具，
+.    Win32Exts for API_Monitor 是Win32Exts项目组提供的一个强大的API 监视工具，
 
 相较于流行的 API_Monitor，它具有解码功能强大、灵活二次扩展开发、与其他脚本语言完美融合交互 等等优异的特性。 
 
@@ -8,7 +8,7 @@ Win32Exts for API_Monitor 是Win32Exts项目组提供的一个强大的API 监�
 
 # Github下载地址：
 
-https://github.com/tankaishuai/Win32Exts_for_API_Monitor
+.     https://github.com/tankaishuai/Win32Exts_for_API_Monitor
 
 
 
@@ -46,9 +46,9 @@ BOOL PathAppendW(__inout WCHAR *pszPath)；
 
 VOID SomeApi( LPCWSTR szParam ){
 
-_wprintf(L”%s”, szParam);
+.    _wprintf(L”%s”, szParam);
 
-szParam = (LPCWSTR)( -1 );
+.    szParam = (LPCWSTR)( -1 );
 
 }
 
@@ -91,6 +91,8 @@ API Monitor 的API配置是以XML形式保存的，例如：
 以上配置中逗号（,）后面的是参数类型描述，预定义的类型描述见下表：
 
 
+================================================
+
 a : LPSTR
 
 w或s : LPWSTR
@@ -119,7 +121,7 @@ p : hex
 
 @ : 注册表 hkey
 
-# : 窗口 hwnd
+#: 窗口 hwnd
 
 $ ： 文件handle
 
@@ -141,6 +143,10 @@ $ ： 文件handle
 
 % : 二进制(buf)
 
+==================================================
+
+
+
 另外，字母大小写有区别，小写表示按值传递，而大写表示按引用传递。例如监控：
 
 1=psapi!GetModuleFileNameExW,|pwu
@@ -148,6 +154,9 @@ $ ： 文件handle
 会输出完整的 进程名、模块句柄、模块名、缓冲区尺寸。
 
 配合脚本语言，可以支持运行时动态的添加、修改该API监控列表。
+
+
+
 
 
 ## 2、	开始监控进程
@@ -169,6 +178,9 @@ rundll32 "%cd%\win32exts.dll",MyHookApi_RunDll32 --hwnd=16进制的进程窗口�
 rundll32   "%cd%\win32exts.dll",MyHookApi_RunDll32         –thread=目标线程Id  –type=钩子类型
 
 
+
+
+
 ## 3、	与Lua等脚本的交互
 
 由于 Win32Exts for Lua/JavaScript/VBScript/Python等等过于复杂，可实现的功能非常丰富，
@@ -182,22 +194,26 @@ rundll32   "%cd%\win32exts.dll",MyHookApi_RunDll32         –thread=目标线�
 
 
 
+
 ## 4、	扩展插件的编写
 
 编写一个常规 Dll：MyAnyHookDisplayCall.dll 实现并导出下列接口：
 
 bool  MyAnyHookDisplayCall(
 
-      LPCSTR szFuncName, 
+.      LPCSTR szFuncName, 
       
-      bool   bIsCallRet, 
+.      bool   bIsCallRet, 
       
-      INT_PTR *pArgs,
+.      INT_PTR *pArgs,
       
-      LPCSTR *pszFmt,
+.      LPCSTR *pszFmt,
       
-  __inout LPCSTR *pszOutText){
-      … …
+.  __inout LPCSTR *pszOutText){
+
+.      … …
+
 }
+
 
 即可实现自定义的参数类型解码输出。如有需要，具体开发细节可联系作者。   
