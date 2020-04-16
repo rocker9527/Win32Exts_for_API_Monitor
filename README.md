@@ -5,6 +5,8 @@
 相较于流行的 API_Monitor，它具有解码功能强大、灵活二次扩展开发、与其他脚本语言完美融合交互 等等优异的特性。 
 
 
+![api_demo](https://github.com/tankaishuai/Win32Exts_for_API_Monitor/blob/master/img/api_monitor_6.jpg)
+
 
 # Github下载地址：
 
@@ -40,9 +42,14 @@ Win32Exts_for_API_Monitor 却可以支持解码各种复杂的数据类型以及
 
 BOOL PathAppendW(__inout WCHAR *pszPath, LPCWSTR szSubPath)；
 
-由于参数 pszPath 是一个输出输出型参数，API Monitor 并不能正确拿到函数调用之后 pszPath 是什么数据内容。
+由于参数 pszPath 是一个输入输出型参数，API Monitor 并不能正确拿到函数调用之后 pszPath 是什么数据内容。
 
 Win32Exts_for_API_Monitor 可以正确监控API调用之前，以及调用之后的参数、返回值 信息。
+
+同时线程信息、LastError信息也一应俱全。
+
+![api_demo](https://github.com/tankaishuai/Win32Exts_for_API_Monitor/blob/master/img/api_monitor_6.jpg)
+
 
 
 当然，API Monitor 也有一些优点是 Win32Exts_for_API_Monitor所不具备的，具体体现在：
@@ -70,13 +77,26 @@ API Monitor 的API配置是以XML形式保存的，例如：
  
 比较复杂，Win32Exts_for_API_Monitor 仅仅只需要在win32exts.ini 中按如下格式记录参数类型符即可：
 
+## index=module!function,[^][in_args][,out_args]
+
+或
+
+## index=module+offset,[^][in_args][,out_args]
+
+或
+
+## index=virtual_addr,[^][in_args][,out_args]
+
+
+其中 [] 表示可选参数，
+## ^表示监控函数返回，如果不指定 out_args，则缺省与 in_args 类型描述相同。
+
+
 ![api_demo](https://github.com/tankaishuai/Win32Exts_for_API_Monitor/blob/master/img/api_monitor_4.jpg)
  
-除了指定导出API之外，Win32Exts_for_API_Monitor 还支持直接指定监控函数的地址，例如：
 
-1=10344300,pwwd
 
-以上配置中逗号（,）后面的是参数类型描述，预定义的类型描述见下表：
+以上配置中逗号（,）后面的 in_args、out_args 是参数类型描述，预定义的类型描述见下表：
 
 
 ================================================
@@ -94,6 +114,10 @@ x : hex
 b : true/false
 
 c : char
+
+h : short
+
+l : int64
 
 f : float
 
@@ -131,6 +155,10 @@ $ ： 文件handle
 
 % : 二进制(buf)
 
+' : time_t
+
+" : FILETIME *
+
 ==================================================
 
 
@@ -156,14 +184,14 @@ Api_Monitor  16进制的进程窗口句柄
 
 或者直接运行：
 
-rundll32 "%cd%\win32exts.dll",MyHookApi_RunDll32 --hwnd=16进制的进程窗口句柄
+rundll32 "%cd%\win32exts.dll",MyAnyHookApi_RunDll32 --hwnd=16进制的进程窗口句柄
 
 即可开始监控。
 
 
 对于无窗口进程，则可以使用下列命令行：
 
-rundll32   "%cd%\win32exts.dll",MyHookApi_RunDll32         –thread=目标线程Id  –type=钩子类型
+rundll32   "%cd%\win32exts.dll",MyAnyHookApi_RunDll32         –thread=目标线程Id  –type=钩子类型
 
 
 
@@ -197,7 +225,7 @@ bool  MyAnyHookDisplayCall(
       
 .      LPCSTR *pszFmt,
       
-.  __inout LPCSTR *pszOutText){
+.      __inout LPSTR *lpszOutText){
 
 .      … …
 
