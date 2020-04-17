@@ -52,9 +52,22 @@ Win32Exts_for_API_Monitor 可以正确监控API调用之前，以及调用之后
 
 
 
+## （4）	API Monitor 仅仅只能监控API 调用，不能阻止这种行为。Win32Exts_for_API_Monitor 可以
+
+实现阻止指定的API调用，并且伪造一个指定的返回码 以返回调用上下文。例如 以下阻止 RegOpenKeyExW 直接返回 0x233：
+
+
+![api_demo](https://github.com/tankaishuai/Win32Exts_for_API_Monitor/blob/master/img/api_monitor_7.jpg)
+
+
+
+
+
 当然，API Monitor 也有一些优点是 Win32Exts_for_API_Monitor所不具备的，具体体现在：
 
-（1）	支持 64位 进程。目前 Win32Exts_for_API_Monitor 仅支持 32位进程， 64位版本尚在开发中。
+（1）	预定义了大量的API声明，但也限制了其灵活性。 
+
+Win32Exts_for_API_Monitor 并不提供除示例外的任何API声明， 可以非常灵活的按照输出格式自由配置。
 
 （2）	友好的用户界面，目前 Win32Exts_for_API_Monitor 并不提供一个完整的用户界面，
 
@@ -77,19 +90,22 @@ API Monitor 的API配置是以XML形式保存的，例如：
  
 比较复杂，Win32Exts_for_API_Monitor 仅仅只需要在win32exts.ini 中按如下格式记录参数类型符即可：
 
-## index=module!function,[^][in_args][,out_args]
+## index=[fake_ret_val=]module!function,[^][in_args][,out_args]
 
 或
 
-## index=module+offset,[^][in_args][,out_args]
+## index=[fake_ret_val=]module+offset,[^][in_args][,out_args]
 
 或
 
-## index=virtual_addr,[^][in_args][,out_args]
+## index=[fake_ret_val=]virtual_addr,[^][in_args][,out_args]
 
 
 其中 [] 表示可选参数，
+
 ## ^表示监控函数返回，如果不指定 out_args，则缺省与 in_args 类型描述相同。
+
+## 如果指定 [fake_ret_val=] 这个，表示拦截该API的调用，并以 fake_ret_val 作为返回值返回调用上下文。
 
 
 ![api_demo](https://github.com/tankaishuai/Win32Exts_for_API_Monitor/blob/master/img/api_monitor_4.jpg)
