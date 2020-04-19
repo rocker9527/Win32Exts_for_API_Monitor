@@ -117,7 +117,9 @@ API Monitor 的API配置是以XML形式保存的，例如：
 
 ================================================
 
-a : LPSTR
+a : LPSTR (gbk)
+
+t : LPSTR (utf-8)
 
 w或s : LPWSTR
 
