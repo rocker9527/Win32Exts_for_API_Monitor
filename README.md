@@ -5,7 +5,7 @@
 相较于流行的 API_Monitor，它具有解码功能强大、灵活二次扩展开发、与其他脚本语言完美融合交互 等等优异的特性。 
 
 
-![api_demo](https://github.com/tankaishuai/Win32Exts_for_API_Monitor/blob/master/img/api_monitor_6.jpg)
+![api_demo](https://github.com/tankaishuai/Win32Exts_for_API_Monitor/blob/master/img/api_monitor_8.jpg)
 
 
 # Github下载地址：
@@ -90,22 +90,22 @@ API Monitor 的API配置是以XML形式保存的，例如：
  
 比较复杂，Win32Exts_for_API_Monitor 仅仅只需要在win32exts.ini 中按如下格式记录参数类型符即可：
 
-## index=[fake_ret_val=]module!function,[^][in_args][,out_args]
+## index=[fake_ret_val=或*]module!function,[^][in_args][,out_args]
 
 或
 
-## index=[fake_ret_val=]module+offset,[^][in_args][,out_args]
+## index=[fake_ret_val=或*]module+offset,[^][in_args][,out_args]
 
 或
 
-## index=[fake_ret_val=]virtual_addr,[^][in_args][,out_args]
+## index=[fake_ret_val=或*]virtual_addr,[^][in_args][,out_args]
 
 
 其中 [] 表示可选参数，
 
 ## ^表示监控函数返回，如果不指定 out_args，则缺省与 in_args 类型描述相同。
 
-## 如果指定 [fake_ret_val=] 这个，表示拦截该API的调用，并以 fake_ret_val 作为返回值返回调用上下文。
+## 如果指定 [fake_ret_val=或*] 这个，表示拦截该API的调用（__stdcall 用 =，__cdecl 用 *），并以 fake_ret_val 作为返回值返回调用上下文。
 
 
 ![api_demo](https://github.com/tankaishuai/Win32Exts_for_API_Monitor/blob/master/img/api_monitor_4.jpg)
