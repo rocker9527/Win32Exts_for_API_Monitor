@@ -29,7 +29,9 @@
 
 ## （2）	API Monitor 的解码参数信息过于简单，通常仅支持解码一些整型参数与字符串，以及常量表示。
 
-Win32Exts_for_API_Monitor 却可以支持解码各种复杂的数据类型以及格式表示，
+Win32Exts_for_API_Monitor 却可以支持解码各种复杂的数据类型以及 自定义结构体！！ 格式表示，
+
+![api_demo](https://github.com/tankaishuai/Win32Exts_for_API_Monitor/blob/master/img/api_monitor_9.jpg)
 
 同时对于预定义不支持的类型也提供了插件扩展方式支持之。
 
@@ -176,6 +178,10 @@ $ ： 文件handle
 ' : time_t
 
 " : FILETIME *
+
+[struct_name] : 自定义结构体，结构体 struct_name 的各个成员需定义在：
+
+win32exts.ini 的 [StructFmt] 下面。支持结构体各种嵌套，同时对于循环链表也能够正确的输出。
 
 ==================================================
 
